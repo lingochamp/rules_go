@@ -26,7 +26,7 @@ def go_tool_binary(name, srcs):
     """
     #NOTE(yuan): we create a temp dir here to pass go_tool_binary build cause go 1.12+ requires $GOCACHE env variable.
     #TODO(yuan): update rules_go to latest
-    gocache = "GOCACHE=$$(cd $$(dirname $(location //go/toolchain:go_tool))/..; mkdir .gocache; cd .gocache; pwd)"
+    gocache = "GOCACHE=$$(cd $$(dirname $(location //go/toolchain:go_tool))/..; mkdir -p .gocache; cd .gocache; pwd)"
     cmd =  " ".join([
             "GOROOT=$$(cd $$(dirname $(location //go/toolchain:go_tool))/..; pwd)",
             gocache,

@@ -45,6 +45,10 @@ func run(p params) error {
 		return fmt.Errorf("error setting environment: %v", err)
 	}
 
+	if err := os.Setenv("GO111MODULE", "off"); err != nil {
+		return fmt.Errorf("error setting environment: %v", err)
+	}
+
 	var source string
 	if match, err := matchFile(p.Source); err != nil {
 		return fmt.Errorf("error applying constraints: %v", err)
@@ -63,7 +67,7 @@ func run(p params) error {
 	for _, d := range p.Includes {
 		args = append(args, "-I", d)
 	}
-	args = append(args, "-o", p.Out, source)
+	args = append(args, "-gensymabis", "-o", p.Out, source)
 	cmd := exec.Command(p.GoTool, args...)
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
